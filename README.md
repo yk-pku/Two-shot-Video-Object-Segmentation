@@ -37,7 +37,78 @@ CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=4 \
   --use_teacher --ema_alpha 0.995
 ```
 
-Note,  you can also use only 
+Note,  you can also use only 1 GPU having enough memory, but remember to change the argument `--batch_size` to 2x. 
+
+## Intermediate Inference
+
+This step uses the trained STCN in phase-1 to predict pseudo labels for unlabeled frames. For each of the two labeled frames in a video, the model takes it as the reference frame to infer the predictions for unlabeled frames from the inference frame to the end frame and in a reverse manner. Therefore, you need to run two times for each labeled frame, and four times per video.
+
+To run intermediate inference, you can use the scripts in `run_youtube_phase2` for YouTube-VOS dataset or `run_davis_phase2` for DAVIS dataset respectively. Taking YouTube-VOS as an example, you need to run commands as follows:
+
+```
+sh run_youtube_phase2/run_eval_youtube_phase2_left.sh
+sh run_youtube_phase2/run_eval_youtube_phase2_leftsecgt.sh
+sh run_youtube_phase2/run_eval_youtube_phase2_right.sh
+sh run_youtube_phase2/run_eval_youtube_phase2_rightsecgt.sh
+```
+
+Then, you need to merge all predictions as:
+
+```
+cd phase2_scripts
+python merge_left_right.py
+```
+
+## Phase-2
+
+You can train various VOS methods in phase-2 as it is originally trained through supervised learning, except you need to update pseudo labels for unlabeled frames during training. 
+
+To run phase-2, you can use:
+
+```
+sh run_phase2.sh
+```
+
+or using commands:
+
+```
+CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=4 \
+  python -m torch.distributed.launch --master_port 9846 --nproc_per_node=2 train.py --stage 3 \
+  --id phase2 \
+  --load_network saves/stcn_s0.pth\
+  --yv_data util/yv_rand_2frames.json \
+  --davis_data  util/davis_rand_2frames.json \
+  --phase2_yv ../vos_phase2/phase1_merge_480p \
+  --phase2_davis ../vos_phase2/phase1_merge_davis \
+  --phase2_train 0 --phase2_thres 0.99 --phase2_start_update 70000
+```
+
+You need to indicate the pseudo-label path predicted by intermediate inference using `--phase2_yv` and `--phase2_davis` for YouTube-VOS and DAVIS respectively.
+
+## Citation
+
+Please cite our paper if you find this repo useful! Thx! 
+
+```
+@article{yan2023two,
+  title={Two-shot Video Object Segmentation},
+  author={Yan, Kun and Li, Xiao and Wei, Fangyun and Wang, Jinglu and Zhang, Chenbin and Wang, Ping and Lu, Yan},
+  journal={CVPR},
+  year={2023}
+}
+```
+
+
+
+You can find our paper [here](https://arxiv.org/abs/2303.12078).
+
+
+
+
+
+
+
+
 
 
 
