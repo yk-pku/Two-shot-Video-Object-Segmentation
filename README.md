@@ -11,7 +11,7 @@ This work has been accepted by CVPR 2023.
 
 ## Installation
 
-This work follows [STCN](https://github.com/hkchengrex/STCN), please install the running environment and prepare datasets according to the corresponding instructions. Besides, we recommend the version of PyTorch >=1.8
+This work follows [STCN](https://github.com/hkchengrex/STCN), please install the running environment and prepare datasets according to the corresponding instructions. Besides, we recommend the version of PyTorch >=1.8.
 
 ## Phase-1
 
