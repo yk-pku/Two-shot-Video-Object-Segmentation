@@ -90,10 +90,10 @@ You need to indicate the pseudo-label path predicted by intermediate inference u
 Please cite our paper if you find this repo useful! Thx! 
 
 ```
-@article{yan2023two,
+@inproceedings{two-shot-vos,
   title={Two-shot Video Object Segmentation},
   author={Yan, Kun and Li, Xiao and Wei, Fangyun and Wang, Jinglu and Zhang, Chenbin and Wang, Ping and Lu, Yan},
-  journal={CVPR},
+  booktitle={CVPR},
   year={2023}
 }
 ```
