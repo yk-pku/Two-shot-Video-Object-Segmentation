@@ -9,3 +9,35 @@ In this work, we present a simple yet efficient training paradigm to exploit the
 
 This work has been accepted by CVPR 2023.
 
+## Installation
+
+This work follows [STCN](https://github.com/hkchengrex/STCN), please install the running environment and prepare datasets according to the corresponding instructions. Besides, we recommend the version of PyTorch >=1.8
+
+## Phase-1
+
+Phase-1 aims to train a STCN model using two labeled frames and their adjacent unlabeled frames, the trained STCN model is used to predict initialized pseudo labels for phase-2.
+
+To run phase-1, you can use:
+```
+sh run_phase1.sh
+```
+
+or using commands:
+
+```
+CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=4 \
+  python -m torch.distributed.launch --master_port 9846 --nproc_per_node=2 train.py --stage 3 \
+  --id phase1 \
+  --load_network ckpts/stcn_s0.pth \
+  --yv_data util/yv_rand_2frames.json \
+  --davis_data  util/davis_rand_2frames.json \
+  --semi \
+  --semi_thres_upper 0.9 \
+  --end_warm 70000 \
+  --use_teacher --ema_alpha 0.995
+```
+
+Note,  you can also use only 
+
+
+
