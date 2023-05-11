@@ -1,4 +1,4 @@
-# Two-shot Video Object Segmentation
+# Two-shot Video Object Segmentation (CVPR2023)
 For the first time, we demonstrate the feasibility of two-shot video object segmentation: two labeled frames per video are almost sufficient for training a decent VOS model. 
 
 <div align='center'><img src='./data_show/teaser.png' alt="teaser" height="400px" width='700px'></div>
