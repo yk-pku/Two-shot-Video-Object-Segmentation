@@ -93,7 +93,8 @@ Please cite our paper if you find this repo useful! Thx!
 @inproceedings{two-shot-vos,
   title={Two-shot Video Object Segmentation},
   author={Yan, Kun and Li, Xiao and Wei, Fangyun and Wang, Jinglu and Zhang, Chenbin and Wang, Ping and Lu, Yan},
-  booktitle={CVPR},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={2257--2267},
   year={2023}
 }
 ```
